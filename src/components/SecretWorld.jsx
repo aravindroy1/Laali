@@ -19,7 +19,7 @@ const SecretWorld = ({ onClose }) => {
 
     // Look for a private hero background image
     const loadPrivateHero = () => {
-      const photoModules = import.meta.glob('/src/assets/private_photos/*hero*.{jpg,jpeg,png,webp}', { eager: true, as: 'url' });
+      const photoModules = import.meta.glob('/src/assets/private_photos/*hero*.{jpg,jpeg,png,webp}', { eager: true, query: '?url', import: 'default' });
       const files = Object.values(photoModules);
       if (files.length > 0) {
         setBgImage(files[0]);
@@ -28,7 +28,7 @@ const SecretWorld = ({ onClose }) => {
     
     // Look for bubu companion gifs
     const loadBubu = () => {
-      const bubuModules = import.meta.glob('/src/assets/private_photos/*bubu*.{gif,png,webp}', { eager: true, as: 'url' });
+      const bubuModules = import.meta.glob('/src/assets/private_photos/*bubu*.{gif,png,webp}', { eager: true, query: '?url', import: 'default' });
       const files = Object.keys(bubuModules).reduce((acc, key) => {
         const name = key.toLowerCase();
         if (name.includes('hang')) acc.hang = bubuModules[key];
@@ -40,7 +40,7 @@ const SecretWorld = ({ onClose }) => {
 
     // Load audio source
     const loadAudioSrc = () => {
-      const audioModules = import.meta.glob('/src/assets/audio/*.{mp3,wav,ogg,m4a,mpeg,mp4}', { eager: true, as: 'url' });
+      const audioModules = import.meta.glob('/src/assets/audio/*.{mp3,wav,ogg,m4a,mpeg,mp4}', { eager: true, query: '?url', import: 'default' });
       const files = Object.values(audioModules).filter(f => f.toLowerCase().includes('private') || f.toLowerCase().includes('vellake'));
       if (files.length > 0) {
         setAudioSrc(files[0]);

@@ -10,7 +10,7 @@ const MusicPlayer = () => {
   useEffect(() => {
     // Dynamically load public audio file
     const loadAudio = () => {
-      const audioModules = import.meta.glob('/src/assets/audio/*.{mp3,wav,ogg,m4a,mpeg,mp4}', { eager: true, as: 'url' });
+      const audioModules = import.meta.glob('/src/assets/audio/*.{mp3,wav,ogg,m4a,mpeg,mp4}', { eager: true, query: '?url', import: 'default' });
       const files = Object.values(audioModules).filter(f => !f.toLowerCase().includes('private') && !f.toLowerCase().includes('vellake'));
       if (files.length > 0) {
         setAudioSrc(files[0]);

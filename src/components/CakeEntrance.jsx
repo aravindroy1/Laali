@@ -9,7 +9,7 @@ const CakeEntrance = ({ onCut }) => {
   useEffect(() => {
     // Dynamically load cake image or GIF
     const loadAssets = async () => {
-      const allAssets = import.meta.glob('/src/assets/*cake*.{png,jpg,jpeg,webp,gif}', { eager: true, as: 'url' });
+      const allAssets = import.meta.glob('/src/assets/*cake*.{png,jpg,jpeg,webp,gif}', { eager: true, query: '?url', import: 'default' });
       const files = Object.values(allAssets);
       if (files.length > 0) {
         setCakeImg(files[0]);

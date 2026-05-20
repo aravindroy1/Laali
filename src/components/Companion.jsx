@@ -9,7 +9,7 @@ const Companion = () => {
   useEffect(() => {
     // Load bear image or GIF dynamically
     const loadBear = async () => {
-      const allAssets = import.meta.glob('/src/assets/*bear*.{png,jpg,jpeg,webp,gif}', { eager: true, as: 'url' });
+      const allAssets = import.meta.glob('/src/assets/*bear*.{png,jpg,jpeg,webp,gif}', { eager: true, query: '?url', import: 'default' });
       const files = Object.values(allAssets);
       if (files.length > 0) {
         setBearImg(files[0]);

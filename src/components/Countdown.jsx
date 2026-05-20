@@ -12,7 +12,7 @@ const Countdown = ({ targetDate, onBypass }) => {
 
   useEffect(() => {
     // Load countdown poster image
-    const photoModules = import.meta.glob('/src/assets/public_photos/*countdown*.{jpg,jpeg,png,webp}', { eager: true, as: 'url' });
+    const photoModules = import.meta.glob('/src/assets/public_photos/*countdown*.{jpg,jpeg,png,webp}', { eager: true, query: '?url', import: 'default' });
     const files = Object.values(photoModules);
     if (files.length > 0) {
       setBgImage(files[0]);
