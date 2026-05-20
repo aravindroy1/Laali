@@ -94,6 +94,7 @@ function App() {
   return (
     <div className="relative min-h-screen bg-transparent text-[#fff7fb] font-sans selection:bg-[#b85b7e] selection:text-white cursor-none">
       <MagicCursor />
+      <MusicPlayer appState={appState} />
 
       {/* Realistic Fireworks Component */}
       <AnimatePresence>
@@ -214,7 +215,6 @@ function App() {
             <AnimatePresence>
               {!isUnlocked && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-                  <MusicPlayer />
                   <Companion />
                 </motion.div>
               )}

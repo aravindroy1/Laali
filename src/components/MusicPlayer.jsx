@@ -1,56 +1,96 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Music, VolumeX } from 'lucide-react';
+import { VolumeX, Volume2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const MusicPlayer = () => {
+import mainAudioFile from '../assets/audio/MAIN.mpeg';
+import introAudioFile from '../assets/audio/INTRO.mpeg';
+import publicAudioFile from '../assets/audio/Public.mpeg';
+
+const MusicPlayer = ({ appState }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audioSrc, setAudioSrc] = useState(null);
-  const audioRef = useRef(null);
+  const [currentTrack, setCurrentTrack] = useState('main');
+  
+  const mainAudioRef = useRef(null);
+  const introAudioRef = useRef(null);
+  const publicAudioRef = useRef(null);
 
+  // Initialize audio elements once
   useEffect(() => {
-    // Dynamically load public audio file
-    const loadAudio = () => {
-      const audioModules = import.meta.glob('/src/assets/audio/*.{mp3,wav,ogg,m4a,mpeg,mp4}', { eager: true, query: '?url', import: 'default' });
-      const files = Object.values(audioModules).filter(f => !f.toLowerCase().includes('private') && !f.toLowerCase().includes('vellake'));
-      if (files.length > 0) {
-        setAudioSrc(files[0]);
-      }
+    mainAudioRef.current = new Audio(mainAudioFile);
+    mainAudioRef.current.loop = true;
+    mainAudioRef.current.volume = 0.5;
+    
+    introAudioRef.current = new Audio(introAudioFile);
+    introAudioRef.current.loop = false;
+    introAudioRef.current.volume = 0.5;
+    
+    publicAudioRef.current = new Audio(publicAudioFile);
+    publicAudioRef.current.loop = true;
+    publicAudioRef.current.volume = 0.4;
+
+    const handleIntroEnd = () => {
+      setCurrentTrack('public');
     };
-    loadAudio();
-  }, []);
 
-  useEffect(() => {
-    if (audioSrc) {
-      audioRef.current = new Audio(audioSrc);
-      audioRef.current.loop = true;
-      audioRef.current.volume = 0.3;
-    }
+    introAudioRef.current.addEventListener('ended', handleIntroEnd);
 
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
+      if (introAudioRef.current) {
+        introAudioRef.current.removeEventListener('ended', handleIntroEnd);
       }
+      if (mainAudioRef.current) mainAudioRef.current.pause();
+      if (introAudioRef.current) introAudioRef.current.pause();
+      if (publicAudioRef.current) publicAudioRef.current.pause();
     };
-  }, [audioSrc]);
+  }, []);
 
+  // Handle App State Transitions
   useEffect(() => {
-    const handleStopMusic = () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        setIsPlaying(false);
+    if (appState === 'countdown' || appState === 'loader') {
+      setCurrentTrack('main');
+    } else if (appState === 'website') {
+      if (currentTrack === 'main') {
+        setCurrentTrack('intro');
       }
+    }
+  }, [appState, currentTrack]);
+
+  // Handle Playing logic whenever track or isPlaying changes
+  useEffect(() => {
+    const audios = {
+      main: mainAudioRef.current,
+      intro: introAudioRef.current,
+      public: publicAudioRef.current
     };
+
+    // Pause all first
+    Object.values(audios).forEach(a => {
+      if (a) a.pause();
+    });
+
+    // Play current if active
+    if (isPlaying && audios[currentTrack]) {
+      audios[currentTrack].play().catch(e => {
+        console.log("Autoplay blocked, waiting for user interaction:", e);
+        setIsPlaying(false);
+      });
+    }
+  }, [isPlaying, currentTrack]);
+
+  // Global Event Listeners (e.g. from VideoModal or Secret World)
+  useEffect(() => {
+    const handleStopMusic = () => setIsPlaying(false);
     
     let wasPlayingBeforeVideo = false;
     const handleVideoPlaying = () => {
-      if (audioRef.current && isPlaying) {
+      if (isPlaying) {
         wasPlayingBeforeVideo = true;
-        audioRef.current.pause();
+        setIsPlaying(false);
       }
     };
     const handleVideoStopped = () => {
-      if (audioRef.current && wasPlayingBeforeVideo) {
-        audioRef.current.play().catch(e => console.log(e));
+      if (wasPlayingBeforeVideo) {
+        setIsPlaying(true);
         wasPlayingBeforeVideo = false;
       }
     };
@@ -65,25 +105,12 @@ const MusicPlayer = () => {
     };
   }, [isPlaying]);
 
-  const togglePlay = () => {
-    if (!audioRef.current) return;
-    
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch(e => console.log("Audio play failed:", e));
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  if (!audioSrc) return null; // Don't show player if no audio file is provided
-
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-[999]">
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        onClick={togglePlay}
+        onClick={() => setIsPlaying(!isPlaying)}
         className="glass w-12 h-12 rounded-full flex items-center justify-center text-white hover:text-[#d88ca8] transition-colors shadow-lg"
       >
         {isPlaying ? (
