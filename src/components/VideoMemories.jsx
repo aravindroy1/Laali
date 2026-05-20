@@ -8,15 +8,20 @@ const VideoMemories = () => {
 
   useEffect(() => {
     const loadVideos = () => {
-      const videoModules = import.meta.glob('/src/assets/videos/*.{mp4,webm,mov}', { eager: true, as: 'url' });
-      const loadedVideos = Object.keys(videoModules).map((key, i) => {
-        const name = key.split('/').pop().split('.')[0];
-        return {
-          id: i,
-          src: videoModules[key],
-          title: name.replace(/[-_]/g, ' '),
-        };
-      });
+      // Replace these with your Google Drive file IDs
+      const googleDriveVideos = [
+        { id: 'A', title: 'Memory A', fileId: '10hcU1PKmiXLgR1H-7pfzneBP50rtEg8g' },
+        { id: 'B', title: 'Memory B', fileId: '1_yHpnP9qe8jfP38prhgflNE3ZYFQtEYl' },
+        { id: 'C', title: 'Memory C', fileId: '1kvMT1wOoX96tYv2Ign_oiHRTBr_1-xx_' },
+        { id: 'D', title: 'Memory D', fileId: '1k4wXc-5kllnI_tjaPNEME3EaiaC-n0Po' },
+        { id: 'E', title: 'Memory E', fileId: '1hoF3yl7LebLn8z8jyy4tOKq3pBB41UeU' },
+      ];
+
+      const loadedVideos = googleDriveVideos.map((vid, i) => ({
+        id: i,
+        src: `https://drive.google.com/uc?export=download&id=${vid.fileId}`,
+        title: vid.title,
+      }));
       setVideos(loadedVideos);
     };
     loadVideos();

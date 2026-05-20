@@ -26,17 +26,19 @@ const PrivateAlbums = () => {
       setPhotos(filteredPhotos);
     };
 
-    // Load private videos
+    // Load private videos from Google Drive
     const loadVideos = async () => {
-      const videoModules = import.meta.glob('/src/assets/private_videos/*.{mp4,webm,mov}', { eager: true, as: 'url' });
-      const loadedVideos = Object.keys(videoModules).map((key, i) => {
-        const name = key.split('/').pop().split('.')[0];
-        return {
-          id: i,
-          src: videoModules[key],
-          title: name.replace(/[-_]/g, ' '),
-        };
-      });
+      // Replace these with your Google Drive file IDs for private videos
+      const googleDriveVideos = [
+        { id: 'F', title: 'Private Memory F', fileId: '1gAYaeqFL2P0RsqM9Vj6oar7mOrszEGvI' },
+        { id: 'G', title: 'Private Memory G', fileId: '1vASDsJbSlvDPwBDg4aacNHxSdAVJDnOw' },
+      ];
+
+      const loadedVideos = googleDriveVideos.map((vid, i) => ({
+        id: i,
+        src: `https://drive.google.com/uc?export=download&id=${vid.fileId}`,
+        title: vid.title,
+      }));
       setVideos(loadedVideos);
     };
     

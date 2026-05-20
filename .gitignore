@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Video files (stored in Google Drive instead)
+src/assets/videos/*
+src/assets/private_videos/*
+!src/assets/videos/.gitkeep
+!src/assets/private_videos/.gitkeep
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
