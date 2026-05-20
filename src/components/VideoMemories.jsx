@@ -19,7 +19,7 @@ const VideoMemories = () => {
 
       const loadedVideos = googleDriveVideos.map((vid, i) => ({
         id: i,
-        src: `https://drive.google.com/uc?export=download&id=${vid.fileId}`,
+        src: `https://drive.google.com/file/d/${vid.fileId}/preview`,
         title: vid.title,
       }));
       setVideos(loadedVideos);
@@ -65,10 +65,11 @@ const VideoMemories = () => {
               className="relative rounded-3xl overflow-hidden cursor-pointer group shadow-xl hover:shadow-[0_0_30px_rgba(216,140,168,0.3)] transition-shadow duration-500"
             >
               <div className="aspect-video bg-[#1a0f16]">
-                <video 
-                  src={`${vid.src}#t=0.1`} 
-                  preload="metadata"
+                <iframe
+                  src={vid.src}
                   className="w-full h-full object-cover"
+                  allow="autoplay"
+                  loading="lazy"
                 />
               </div>
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
@@ -94,7 +95,7 @@ const VideoMemories = () => {
             >
               <button 
                 onClick={() => setActiveVideo(null)}
-                className="absolute top-6 right-6 text-white/50 hover:text-white z-[70] transition-colors"
+                className="absolute top-6 left-6 text-white/50 hover:text-white z-[70] transition-colors"
               >
                 <X size={32} />
               </button>
@@ -104,14 +105,12 @@ const VideoMemories = () => {
                 exit={{ scale: 0.9 }}
                 className="w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative"
               >
-                <video 
-                  src={activeVideo.src} 
-                  controls 
-                  autoPlay 
+                <iframe
+                  src={activeVideo.src}
                   className="w-full h-full object-contain"
-                >
-                  Your browser does not support the video tag.
-                </video>
+                  allow="autoplay; fullscreen"
+                  allowFullScreen
+                />
               </motion.div>
             </motion.div>
           )}

@@ -36,7 +36,7 @@ const PrivateAlbums = () => {
 
       const loadedVideos = googleDriveVideos.map((vid, i) => ({
         id: i,
-        src: `https://drive.google.com/uc?export=download&id=${vid.fileId}`,
+        src: `https://drive.google.com/file/d/${vid.fileId}/preview`,
         title: vid.title,
       }));
       setVideos(loadedVideos);
@@ -147,10 +147,11 @@ const PrivateAlbums = () => {
                   className="relative rounded-3xl overflow-hidden cursor-pointer group shadow-[0_15px_40px_rgba(0,0,0,0.6)] border border-white/20"
                 >
                   <div className="aspect-video bg-black/80">
-                    <video 
-                      src={`${vid.src}#t=0.1`} 
-                      preload="metadata"
+                    <iframe
+                      src={vid.src}
                       className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-700"
+                      allow="autoplay"
+                      loading="lazy"
                     />
                   </div>
                   <div className="absolute inset-0 bg-black/50 group-hover:bg-black/20 transition-colors duration-500 flex items-center justify-center">
@@ -186,7 +187,7 @@ const PrivateAlbums = () => {
             >
               <button 
                 onClick={() => setActiveVideo(null)}
-                className="absolute top-8 right-8 text-white/50 hover:text-white z-[120] p-4 glass-dark rounded-full transition-all hover:scale-110 cursor-pointer"
+                className="absolute top-8 left-8 text-white/50 hover:text-white z-[120] p-4 glass-dark rounded-full transition-all hover:scale-110 cursor-pointer"
               >
                 <X size={32} />
               </button>
@@ -197,14 +198,12 @@ const PrivateAlbums = () => {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="w-full max-w-6xl aspect-video bg-black rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)] relative border border-white/10"
               >
-                <video 
-                  src={activeVideo.src} 
-                  controls 
-                  autoPlay 
+                <iframe
+                  src={activeVideo.src}
                   className="w-full h-full object-contain"
-                >
-                  Your browser does not support the video tag.
-                </video>
+                  allow="autoplay; fullscreen"
+                  allowFullScreen
+                />
               </motion.div>
             </motion.div>
           )}
