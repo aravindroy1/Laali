@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Heart } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 const Footer = ({ onSecretTrigger }) => {
   const [clicks, setClicks] = useState(0);
@@ -28,7 +28,7 @@ const Footer = ({ onSecretTrigger }) => {
           className="mb-8"
         >
           <h2 className="font-cursive text-6xl md:text-8xl text-white text-glow mb-4">
-            Forever Yours
+            A Special Day
           </h2>
         </motion.div>
 
@@ -39,14 +39,14 @@ const Footer = ({ onSecretTrigger }) => {
           transition={{ duration: 1, delay: 0.5 }}
           className="flex items-center gap-3 text-[#d88ca8] font-serif tracking-widest uppercase text-sm"
         >
-          <span>Made with</span>
+          <span>Crafted</span>
           <motion.button
             onClick={handleHeartClick}
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ duration: 1.5, repeat: Infinity }}
             className="focus:outline-none cursor-pointer"
           >
-            <Heart className="w-5 h-5 text-[#b85b7e] fill-[#b85b7e]" />
+            <Sparkles className="w-5 h-5 text-[#b85b7e]" />
           </motion.button>
           <span>for Laali</span>
         </motion.div>
@@ -66,7 +66,7 @@ const Footer = ({ onSecretTrigger }) => {
           transition={{ duration: 1, delay: 1.5 }}
           className="mt-8 font-serif text-xs text-white/40"
         >
-          Happy Birthday, my love.
+          Wishing you the happiest of birthdays.
         </motion.p>
       </div>
     </footer>

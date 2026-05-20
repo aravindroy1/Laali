@@ -94,7 +94,7 @@ function App() {
   return (
     <div className="relative min-h-screen bg-transparent text-[#fff7fb] font-sans selection:bg-[#b85b7e] selection:text-white cursor-none">
       <MagicCursor />
-      <MusicPlayer appState={appState} />
+      <MusicPlayer appState={appState} isUnlocked={isUnlocked} />
 
       {/* Realistic Fireworks Component */}
       <AnimatePresence>
@@ -110,16 +110,16 @@ function App() {
               options={{
                 rocketsPoint: { min: 0, max: 100 },
                 hue: { min: 300, max: 360 }, // Pinks and reds
-                delay: { min: 5, max: 15 }, // Extremely fast firing
+                delay: { min: 15, max: 30 }, // Reduced firing rate
                 speed: 3,
                 acceleration: 1.05,
                 friction: 0.96,
                 gravity: 1.5,
-                particles: 250, // Massive bursts
+                particles: 90, // Reduced burst size
                 traceLength: 4,
                 traceSpeed: 10,
-                explosion: 10, // Huge explosions
-                intensity: 70, // Many fireworks at once
+                explosion: 5, // Smaller explosions
+                intensity: 20, // Fewer fireworks at once
                 flickering: 60, // Heavy crackling effect
                 lineStyle: 'round',
                 opacity: 0.6,

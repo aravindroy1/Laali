@@ -6,7 +6,7 @@ import mainAudioFile from '../assets/audio/MAIN.mpeg';
 import introAudioFile from '../assets/audio/INTRO.mpeg';
 import publicAudioFile from '../assets/audio/Public.mpeg';
 
-const MusicPlayer = ({ appState }) => {
+const MusicPlayer = ({ appState, isUnlocked }) => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentTrack, setCurrentTrack] = useState('main');
   
@@ -68,14 +68,14 @@ const MusicPlayer = ({ appState }) => {
       if (a) a.pause();
     });
 
-    // Play current if active
-    if (isPlaying && audios[currentTrack]) {
+    // Play current if active and NOT in the private space
+    if (isPlaying && !isUnlocked && audios[currentTrack]) {
       audios[currentTrack].play().catch(e => {
         console.log("Autoplay blocked, waiting for user interaction:", e);
         setIsPlaying(false);
       });
     }
-  }, [isPlaying, currentTrack]);
+  }, [isPlaying, currentTrack, isUnlocked]);
 
   // Global Event Listeners (e.g. from VideoModal or Secret World)
   useEffect(() => {
@@ -104,6 +104,8 @@ const MusicPlayer = ({ appState }) => {
       window.removeEventListener('video-stopped', handleVideoStopped);
     };
   }, [isPlaying]);
+
+  if (isUnlocked) return null;
 
   return (
     <div className="fixed top-1/2 left-4 -translate-y-1/2 z-[999]">

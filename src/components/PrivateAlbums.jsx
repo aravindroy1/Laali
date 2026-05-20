@@ -79,8 +79,8 @@ const PrivateAlbums = () => {
               I made this hidden dimension just for us. Away from the world, away from everyone else. 
               Here is where I keep the moments that belong entirely to my heart.
             </p>
-            <p className="drop-shadow-md">
-              You mean absolutely everything to me. I love you more than words could ever explain.
+            <p className="font-serif text-lg md:text-xl text-white/90 leading-relaxed drop-shadow-md">
+              Thank you for being such an amazing person. Wishing you all the happiness and joy in the world today and always.
             </p>
           </div>
         </motion.div>
