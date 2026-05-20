@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
 
 const MagicCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
   const [particles, setParticles] = useState([]);
 
   useEffect(() => {
@@ -10,10 +11,13 @@ const MagicCursor = () => {
     let lastTime = 0;
 
     const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      // Update motion values directly without triggering React renders
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
 
       const now = Date.now();
-      if (now - lastTime > 40) { // spawn rate
+      // Throttle spawn rate to 150ms to prevent heavy React state updates
+      if (now - lastTime > 150) { 
         lastTime = now;
         const newParticle = {
           id: particleId++,
@@ -24,28 +28,27 @@ const MagicCursor = () => {
           type: Math.random() > 0.8 ? 'butterfly' : 'sparkle'
         };
 
-        setParticles((prev) => [...prev.slice(-15), newParticle]);
+        setParticles((prev) => [...prev.slice(-10), newParticle]); // Reduced max particles
       }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [mouseX, mouseY]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[9999] hidden md:block">
       {/* Main Cursor Glow */}
       <motion.div
-        className="absolute w-8 h-8 rounded-full mix-blend-screen bg-gradient-to-r from-[#d88ca8] to-[#b85b7e] filter blur-md opacity-60 -translate-x-1/2 -translate-y-1/2"
-        animate={{ x: mousePosition.x, y: mousePosition.y }}
-        transition={{ type: 'tween', ease: 'linear', duration: 0 }}
+        className="absolute top-0 left-0 w-8 h-8 rounded-full mix-blend-screen bg-gradient-to-r from-[#d88ca8] to-[#b85b7e] opacity-60 -translate-x-1/2 -translate-y-1/2"
+        style={{ x: mouseX, y: mouseY }}
+        // Removed filter blur-md to massively improve GPU performance
       />
       
       {/* Center dot */}
       <motion.div
-        className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_10px_#fff] -translate-x-1/2 -translate-y-1/2"
-        animate={{ x: mousePosition.x, y: mousePosition.y }}
-        transition={{ type: 'tween', ease: 'linear', duration: 0 }}
+        className="absolute top-0 left-0 w-2 h-2 rounded-full bg-white shadow-[0_0_10px_#fff] -translate-x-1/2 -translate-y-1/2"
+        style={{ x: mouseX, y: mouseY }}
       />
 
       <AnimatePresence>
@@ -62,7 +65,7 @@ const MagicCursor = () => {
             }}
             exit={{ opacity: 0 }}
             transition={{ duration: p.type === 'butterfly' ? 2 : 1, ease: 'easeOut' }}
-            className="absolute -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2"
           >
             {p.type === 'butterfly' ? (
               <span className="text-4xl drop-shadow-[0_0_5px_rgba(216,140,168,0.8)]" style={{ color: p.color }}>

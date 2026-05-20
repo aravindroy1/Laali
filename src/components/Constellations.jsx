@@ -90,7 +90,8 @@ const Constellations = () => {
 
     const initParticles = () => {
       particles = [];
-      let numberOfParticles = (canvas.width * canvas.height) / 9000;
+      // Reduce particle count significantly for performance, max 70 particles
+      let numberOfParticles = Math.min(70, Math.floor((canvas.width * canvas.height) / 25000));
       for (let i = 0; i < numberOfParticles; i++) {
         let size = Math.random() * 2 + 1;
         let x = Math.random() * (canvas.width - size * 2 - size * 2) + size * 2;
@@ -102,13 +103,16 @@ const Constellations = () => {
     };
 
     const connect = () => {
+      // Optimize O(N^2) connection loop
+      const maxDistanceSquared = 15000; 
       for (let a = 0; a < particles.length; a++) {
-        for (let b = a; b < particles.length; b++) {
-          let distance = 
-            (particles[a].x - particles[b].x) * (particles[a].x - particles[b].x) +
-            (particles[a].y - particles[b].y) * (particles[a].y - particles[b].y);
-          if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-            let opacity = 1 - distance / 20000;
+        for (let b = a + 1; b < particles.length; b++) {
+          let dx = particles[a].x - particles[b].x;
+          let dy = particles[a].y - particles[b].y;
+          let distanceSq = dx * dx + dy * dy;
+          
+          if (distanceSq < maxDistanceSquared) {
+            let opacity = 1 - (distanceSq / maxDistanceSquared);
             ctx.strokeStyle = `rgba(216, 140, 168, ${opacity * 0.5})`;
             ctx.lineWidth = 1;
             ctx.beginPath();

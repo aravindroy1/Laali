@@ -187,6 +187,8 @@ function App() {
                     style={{ scale: scaleBg }}
                     src={bgImages.hero2} 
                     alt="Hero 2"
+                    loading="lazy"
+                    decoding="async"
                     className="absolute top-1/2 left-1/2 w-[100vh] h-[100vw] -translate-x-1/2 -translate-y-1/2 -rotate-90 object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-[#1a0f16]/90 via-[#2c1a25]/50 to-[#1a0f16]/90" />
@@ -198,6 +200,8 @@ function App() {
                     style={{ scale: scaleBg }}
                     src={bgImages.hero3} 
                     alt="Hero 3"
+                    loading="lazy"
+                    decoding="async"
                     className="absolute top-1/2 left-1/2 w-[100vh] h-[100vw] -translate-x-1/2 -translate-y-1/2 -rotate-90 object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f16] via-[#1a0f16]/80 to-transparent" />

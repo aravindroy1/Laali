@@ -23,15 +23,15 @@ const Petals = () => {
       {petals.map((petal) => (
         <motion.div
           key={petal.id}
-          className="absolute opacity-40"
+          className="absolute top-0 left-0 opacity-40"
           initial={{
-            top: `-10%`,
-            left: `${petal.x}%`,
+            y: `-10vh`,
+            x: `${petal.x}vw`,
             rotate: petal.rotation,
           }}
           animate={{
-            top: `110%`,
-            left: `${petal.x + (Math.random() * 20 - 10)}%`,
+            y: `110vh`,
+            x: `${petal.x + (Math.random() * 20 - 10)}vw`,
             rotate: petal.rotation + 360,
           }}
           transition={{
