@@ -7,7 +7,7 @@ import introAudioFile from '../assets/audio/INTRO.mpeg';
 import publicAudioFile from '../assets/audio/Public.mpeg';
 
 const MusicPlayer = ({ appState }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [currentTrack, setCurrentTrack] = useState('main');
   
   const mainAudioRef = useRef(null);
@@ -106,7 +106,7 @@ const MusicPlayer = ({ appState }) => {
   }, [isPlaying]);
 
   return (
-    <div className="fixed bottom-6 right-6 z-[999]">
+    <div className="fixed top-1/2 left-4 -translate-y-1/2 z-[999]">
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
