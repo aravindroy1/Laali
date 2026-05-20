@@ -8,6 +8,8 @@ import publicAudioFile from '../assets/audio/Public.mpeg';
 
 const MusicPlayer = ({ appState, isUnlocked }) => {
   const [isPlaying, setIsPlaying] = useState(true);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const [userExplicitlyPaused, setUserExplicitlyPaused] = useState(false);
   const [currentTrack, setCurrentTrack] = useState('main');
   
   const mainAudioRef = useRef(null);
@@ -77,6 +79,26 @@ const MusicPlayer = ({ appState, isUnlocked }) => {
     }
   }, [isPlaying, currentTrack, isUnlocked]);
 
+  // Handle first interaction to bypass browser autoplay blocks
+  useEffect(() => {
+    const handleFirstInteraction = () => {
+      if (!hasInteracted && !userExplicitlyPaused) {
+        setHasInteracted(true);
+        setIsPlaying(true);
+      }
+    };
+
+    window.addEventListener('click', handleFirstInteraction, { once: true });
+    window.addEventListener('touchstart', handleFirstInteraction, { once: true });
+    window.addEventListener('keydown', handleFirstInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener('click', handleFirstInteraction);
+      window.removeEventListener('touchstart', handleFirstInteraction);
+      window.removeEventListener('keydown', handleFirstInteraction);
+    };
+  }, [hasInteracted, userExplicitlyPaused]);
+
   // Global Event Listeners (e.g. from VideoModal or Secret World)
   useEffect(() => {
     const handleStopMusic = () => setIsPlaying(false);
@@ -112,7 +134,10 @@ const MusicPlayer = ({ appState, isUnlocked }) => {
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        onClick={() => setIsPlaying(!isPlaying)}
+        onClick={() => {
+          setIsPlaying(!isPlaying);
+          if (isPlaying) setUserExplicitlyPaused(true);
+        }}
         className="glass w-12 h-12 rounded-full flex items-center justify-center text-white hover:text-[#d88ca8] transition-colors shadow-lg"
       >
         {isPlaying ? (
