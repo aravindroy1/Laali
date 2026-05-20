@@ -91,11 +91,15 @@ const MusicPlayer = ({ appState, isUnlocked }) => {
     window.addEventListener('click', handleFirstInteraction, { once: true });
     window.addEventListener('touchstart', handleFirstInteraction, { once: true });
     window.addEventListener('keydown', handleFirstInteraction, { once: true });
+    window.addEventListener('mousemove', handleFirstInteraction, { once: true });
+    window.addEventListener('scroll', handleFirstInteraction, { once: true });
 
     return () => {
       window.removeEventListener('click', handleFirstInteraction);
       window.removeEventListener('touchstart', handleFirstInteraction);
       window.removeEventListener('keydown', handleFirstInteraction);
+      window.removeEventListener('mousemove', handleFirstInteraction);
+      window.removeEventListener('scroll', handleFirstInteraction);
     };
   }, [hasInteracted, userExplicitlyPaused]);
 
