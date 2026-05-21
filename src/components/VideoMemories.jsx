@@ -64,13 +64,9 @@ const VideoMemories = () => {
               onClick={() => setActiveVideo(vid)}
               className="relative rounded-3xl overflow-hidden cursor-pointer group shadow-xl hover:shadow-[0_0_30px_rgba(216,140,168,0.3)] transition-shadow duration-500"
             >
-              <div className="aspect-video bg-[#1a0f16]">
-                <iframe
-                  src={vid.src}
-                  className="w-full h-full object-cover"
-                  allow="autoplay"
-                  loading="lazy"
-                />
+              <div className="aspect-video bg-gradient-to-br from-[#2c1622] to-[#12070d] flex items-center justify-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(216,140,168,0.15),transparent_70%)]" />
+                <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:14px_24px]" />
               </div>
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                 <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center transform group-hover:scale-110 transition-transform">

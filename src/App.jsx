@@ -42,7 +42,7 @@ function App() {
       const timer = setTimeout(() => {
         setAppState('website');
         setShowFireworks(true);
-      }, 3000);
+      }, 1500);
       return () => clearTimeout(timer);
     }
   }, [appState]);

@@ -16,8 +16,8 @@ const MagicCursor = () => {
       mouseY.set(e.clientY);
 
       const now = Date.now();
-      // Throttle spawn rate to 150ms to prevent heavy React state updates
-      if (now - lastTime > 150) { 
+      // Throttle spawn rate to 250ms to prevent heavy React state updates
+      if (now - lastTime > 250) { 
         lastTime = now;
         const newParticle = {
           id: particleId++,
@@ -28,7 +28,7 @@ const MagicCursor = () => {
           type: Math.random() > 0.8 ? 'butterfly' : 'sparkle'
         };
 
-        setParticles((prev) => [...prev.slice(-10), newParticle]); // Reduced max particles
+        setParticles((prev) => [...prev.slice(-5), newParticle]); // Reduced max particles
       }
     };
 

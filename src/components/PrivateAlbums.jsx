@@ -146,13 +146,9 @@ const PrivateAlbums = () => {
                   onClick={() => setActiveVideo(vid)}
                   className="relative rounded-3xl overflow-hidden cursor-pointer group shadow-[0_15px_40px_rgba(0,0,0,0.6)] border border-white/20"
                 >
-                  <div className="aspect-video bg-black/80">
-                    <iframe
-                      src={vid.src}
-                      className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-700"
-                      allow="autoplay"
-                      loading="lazy"
-                    />
+                  <div className="aspect-video bg-gradient-to-br from-[#200f18] to-[#070305] flex items-center justify-center relative overflow-hidden">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(216,140,168,0.1),transparent_70%)]" />
+                    <div className="absolute inset-0 opacity-5 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:14px_24px]" />
                   </div>
                   <div className="absolute inset-0 bg-black/50 group-hover:bg-black/20 transition-colors duration-500 flex items-center justify-center">
                     <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-xl flex items-center justify-center transform group-hover:scale-110 transition-transform border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.2)]">
