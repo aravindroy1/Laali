@@ -17,7 +17,7 @@ import SecretWorld from './components/SecretWorld';
 import Companion from './components/Companion';
 
 function App() {
-  const targetDate = new Date('2026-05-22T00:00:00').getTime();
+  const targetDate = new Date('2026-05-21T12:15:00').getTime();
   
   const [appState, setAppState] = useState(() => {
     return new Date().getTime() >= targetDate ? 'loader' : 'countdown';
@@ -141,7 +141,7 @@ function App() {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="fixed inset-0 z-[200] bg-[#0d070b] overflow-y-auto overflow-x-hidden"
           >
-            <Countdown targetDate="2026-05-22T00:00:00" onBypass={handleCountdownFinish} />
+            <Countdown targetDate="2026-05-21T12:15:00" onBypass={handleCountdownFinish} />
           </motion.div>
         )}
       </AnimatePresence>
