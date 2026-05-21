@@ -137,14 +137,12 @@ const SecretWorld = ({ onClose }) => {
       {/* Dynamic Private Background */}
       {bgImage && (
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-          {/* Centered and properly rotated to fill screen */}
-          <motion.img 
+          <motion.div 
             initial={{ opacity: 0, scale: 1.2 }}
             animate={{ opacity: 1, scale: 1.2 }}
             transition={{ duration: 4, delay: 1 }}
-            src={bgImage} 
-            alt="Secret Background"
-            className="absolute top-1/2 left-1/2 w-[100vh] h-[100vw] -translate-x-1/2 -translate-y-1/2 -rotate-90 object-cover"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url('${bgImage}')` }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90" />
         </div>

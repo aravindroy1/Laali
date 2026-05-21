@@ -173,9 +173,8 @@ function App() {
               {bgImages.hero1 && (
                 <motion.div style={{ opacity: opacityHero1 }} className="absolute inset-0">
                   <motion.div 
-                    style={{ scale: scaleBg }}
+                    style={{ scale: scaleBg, backgroundImage: `url('${bgImages.hero1}')` }}
                     className="absolute inset-0 bg-cover bg-[center_25%] bg-no-repeat"
-                    initial={{ backgroundImage: `url('${bgImages.hero1}')` }}
                   />
                   {/* Very light overlay for hero1 to match Hero.jsx */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f16] via-transparent to-[#1a0f16]/60" />
@@ -184,26 +183,18 @@ function App() {
               )}
               {bgImages.hero2 && (
                 <motion.div style={{ opacity: opacityHero2 }} className="absolute inset-0">
-                  <motion.img 
-                    style={{ scale: scaleBg }}
-                    src={bgImages.hero2} 
-                    alt="Hero 2"
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute top-1/2 left-1/2 w-[100vh] h-[100vw] -translate-x-1/2 -translate-y-1/2 -rotate-90 object-cover"
+                  <motion.div 
+                    style={{ scale: scaleBg, backgroundImage: `url('${bgImages.hero2}')` }}
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-[#1a0f16]/90 via-[#2c1a25]/50 to-[#1a0f16]/90" />
                 </motion.div>
               )}
               {bgImages.hero3 && (
                 <motion.div style={{ opacity: opacityHero3 }} className="absolute inset-0">
-                  <motion.img 
-                    style={{ scale: scaleBg }}
-                    src={bgImages.hero3} 
-                    alt="Hero 3"
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute top-1/2 left-1/2 w-[100vh] h-[100vw] -translate-x-1/2 -translate-y-1/2 -rotate-90 object-cover"
+                  <motion.div 
+                    style={{ scale: scaleBg, backgroundImage: `url('${bgImages.hero3}')` }}
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f16] via-[#1a0f16]/80 to-transparent" />
                 </motion.div>
