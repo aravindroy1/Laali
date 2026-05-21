@@ -15,7 +15,7 @@ const PrivateAlbums = () => {
   useEffect(() => {
     // Load private photos
     const loadPhotos = async () => {
-      const photoModules = import.meta.glob('/src/assets/private_photos/*.{jpg,jpeg,png,webp}', { eager: true, query: '?url', import: 'default' });
+      const photoModules = import.meta.glob('/src/assets/private_photos/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', { eager: true, query: '?url', import: 'default' });
       const loadedPhotos = Object.entries(photoModules).map(([path, url]) => {
         const filename = path.split('/').pop() || '';
         return {

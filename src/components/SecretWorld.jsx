@@ -19,7 +19,7 @@ const SecretWorld = ({ onClose }) => {
 
     // Look for a private hero background image
     const loadPrivateHero = () => {
-      const photoModules = import.meta.glob('/src/assets/private_photos/*hero*.{jpg,jpeg,png,webp}', { eager: true, query: '?url', import: 'default' });
+      const photoModules = import.meta.glob('/src/assets/private_photos/*hero*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', { eager: true, query: '?url', import: 'default' });
       const files = Object.values(photoModules);
       if (files.length > 0) {
         setBgImage(files[0]);
