@@ -10,7 +10,7 @@ const Gallery = () => {
 
   useEffect(() => {
     const loadPhotos = async () => {
-      const photoModules = import.meta.glob('/src/assets/public_photos/*.{jpg,jpeg,png,webp}', { eager: true, query: '?url', import: 'default' });
+      const photoModules = import.meta.glob('/src/assets/public_photos/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', { eager: true, query: '?url', import: 'default' });
       const loadedPhotos = Object.values(photoModules).map((url, i) => ({
         id: i,
         src: url,

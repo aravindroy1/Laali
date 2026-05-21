@@ -8,7 +8,7 @@ const Hero = () => {
   useEffect(() => {
     // Dynamically look for any file starting with 'hero' in public_photos
     const loadHero = async () => {
-      const heroModules = import.meta.glob('/src/assets/public_photos/hero.{jpg,jpeg,png,webp}', { eager: true, query: '?url', import: 'default' });
+      const heroModules = import.meta.glob('/src/assets/public_photos/hero.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', { eager: true, query: '?url', import: 'default' });
       const files = Object.values(heroModules);
       if (files.length > 0) {
         setHeroBg(files[0]);
