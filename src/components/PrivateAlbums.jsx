@@ -16,14 +16,24 @@ const PrivateAlbums = () => {
     // Load private photos
     const loadPhotos = async () => {
       const photoModules = import.meta.glob('/src/assets/private_photos/*.{jpg,jpeg,png,webp}', { eager: true, query: '?url', import: 'default' });
-      const loadedPhotos = Object.values(photoModules).map((url, i) => ({
+      const loadedPhotos = Object.entries(photoModules).map(([path, url]) => {
+        const filename = path.split('/').pop() || '';
+        return {
+          src: url,
+          filename: filename
+        };
+      });
+      // Filter out private hero image so it doesn't show in the masonry grid
+      const filteredPhotos = loadedPhotos.filter(p => !p.filename.toLowerCase().includes('hero'));
+      // Sort all photos alphabetically by filename (case-insensitive, natural ordering)
+      filteredPhotos.sort((a, b) => a.filename.toLowerCase().localeCompare(b.filename.toLowerCase(), undefined, { numeric: true, sensitivity: 'base' }));
+      // Map sorted list to include index-based ID and ALT fields
+      const finalPhotos = filteredPhotos.map((p, i) => ({
         id: i,
-        src: url,
+        src: p.src,
         alt: `Private Memory ${i + 1}`
       }));
-      // Filter out private hero image so it doesn't show in the masonry grid
-      const filteredPhotos = loadedPhotos.filter(p => !p.src.toLowerCase().includes('hero'));
-      setPhotos(filteredPhotos);
+      setPhotos(finalPhotos);
     };
 
     // Load private videos from Google Drive
@@ -111,13 +121,13 @@ const PrivateAlbums = () => {
                   className="mb-8 relative rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.5)] border border-[#d88ca8]/20 hover:shadow-[0_0_40px_rgba(216,140,168,0.6)] hover:border-[#d88ca8]/60 transition-all duration-500"
                 >
                   <RevealCard isPrivate={true}>
-                    <div onClick={() => setIndex(i)} className="w-full h-full relative group cursor-pointer overflow-hidden rounded-2xl">
+                    <div onClick={() => setIndex(i)} className="w-full aspect-[3/4] relative group cursor-pointer overflow-hidden rounded-2xl">
                       <div className="absolute inset-0 bg-[#d88ca8]/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none" />
                       <img
                         src={photo.src}
                         alt={photo.alt}
                         loading="lazy"
-                        className="w-full h-auto object-cover transform group-hover:scale-110 transition-transform duration-1000 ease-out"
+                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000 ease-out"
                       />
                     </div>
                   </RevealCard>
