@@ -121,13 +121,13 @@ const PrivateAlbums = () => {
                   className="mb-8 relative rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.5)] border border-[#d88ca8]/20 hover:shadow-[0_0_40px_rgba(216,140,168,0.6)] hover:border-[#d88ca8]/60 transition-all duration-500"
                 >
                   <RevealCard isPrivate={true}>
-                    <div onClick={() => setIndex(i)} className="w-full aspect-[3/4] relative group cursor-pointer overflow-hidden rounded-2xl">
+                    <div onClick={() => setIndex(i)} className="w-full h-auto relative group cursor-pointer overflow-hidden rounded-2xl">
                       <div className="absolute inset-0 bg-[#d88ca8]/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none" />
                       <img
                         src={photo.src}
                         alt={photo.alt}
                         loading="lazy"
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000 ease-out"
+                        className="w-full h-auto object-cover transform group-hover:scale-110 transition-transform duration-1000 ease-out"
                       />
                     </div>
                   </RevealCard>
